@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  langflow:
+    image: langflowai/langflow:latest
+    networks:
+      - dokploy-network
+    ports:
+      - "7860"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.langflow.entrypoints=websecure"
+      - "traefik.http.routers.langflow.tls.certResolver=letsencrypt"
+      - "traefik.http.routers.langflow.rule=Host(`langflow.k2solucoessolar.com.br`)"
+      - "traefik.http.services.langflow.loadbalancer.server.port=7860"
+    depends_on:
+      - postgres
+    environment:
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
+      # This variable defines where the logs, file storage, monitor data and secret keys are stored.
+    volumes:
+      - langflow-data:/app/langflow
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: langflow
+      POSTGRES_PASSWORD: langflow
+      POSTGRES_DB: langflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - langflow-postgres:/var/lib/postgresql/data
+
+volumes:
+  langflow-postgres:
+  langflow-data:
+
+networks:
+  dokploy-network:
+    external: true
