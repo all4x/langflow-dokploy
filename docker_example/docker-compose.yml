@@ -13,6 +13,13 @@ services:
       - "traefik.http.routers.langflow.tls.certResolver=letsencrypt"
       - "traefik.http.routers.langflow.rule=Host(`langflow.k2solucoessolar.com.br`)"
       - "traefik.http.services.langflow.loadbalancer.server.port=7860"
+    deploy:
+      resources:
+        limits:
+          memory: 600M
+          cpus: "1"
+        reservations:
+          cpus: "0.5"
     environment:
       - LANGFLOW_DATABASE_URL=${LANGFLOW_DATABASE_URL}
       - LANGFLOW_SUPERUSER=aleiola
