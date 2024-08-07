@@ -22,8 +22,8 @@ services:
           cpus: "0.5"
     environment:
       - LANGFLOW_DATABASE_URL=${LANGFLOW_DATABASE_URL}
-      - LANGFLOW_SUPERUSER=aleiola
-      - LANGFLOW_SUPERUSER_PASSWORD=aej25929
+      - LANGFLOW_SUPERUSER=${LANGFLOW_SUPERUSER}
+      - LANGFLOW_SUPERUSER_PASSWORD=${LANGFLOW_SUPERUSER_PASSWORD}
     volumes:
       - langflow-data:/app/langflow
 
