@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.langflow.rule=Host(`langflow.k2solucoessolar.com.br`)"
       - "traefik.http.services.langflow.loadbalancer.server.port=7860"
     environment:
-      - LANGFLOW_DATABASE_URL=postgresql://aleiola:ADEJ@30315@k2-solues-solar-postgres-4de737:5432/langflow
+      - LANGFLOW_DATABASE_URL=${LANGFLOW_DATABASE_URL}
     volumes:
       - langflow-data:/app/langflow
 
@@ -24,4 +24,3 @@ volumes:
 networks:
   dokploy-network:
     external: true
-
